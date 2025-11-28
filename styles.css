@@ -1222,12 +1222,16 @@ body::before {
             rgba(255, 215, 0, 0.05) 50%
         );
     opacity: 0.5;
+    pointer-events: none;
+    z-index: 0;
 }
 
 .apply-content {
     max-width: 600px;
     margin: 0 auto;
     text-align: center;
+    position: relative;
+    z-index: 1;
 }
 
 .apply-content h2 {
@@ -1240,10 +1244,14 @@ body::before {
 .apply-form {
     margin-top: 48px;
     text-align: left;
+    position: relative;
+    z-index: 2;
 }
 
 .form-group {
     margin-bottom: 24px;
+    position: relative;
+    z-index: 2;
 }
 
 .form-group input,
@@ -1257,6 +1265,9 @@ body::before {
     font-size: 16px;
     font-family: inherit;
     transition: var(--transition);
+    position: relative;
+    z-index: 3;
+    pointer-events: auto;
 }
 
 .form-group input::placeholder,
@@ -1270,6 +1281,17 @@ body::before {
     border-color: var(--nigerian-gold);
     background: rgba(255, 255, 255, 0.2);
     box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2);
+}
+
+.form-group input:not(:disabled),
+.form-group textarea:not(:disabled) {
+    cursor: text;
+}
+
+.apply-form button {
+    position: relative;
+    z-index: 3;
+    pointer-events: auto;
 }
 
 .form-note {

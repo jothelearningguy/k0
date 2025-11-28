@@ -30,6 +30,17 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
+// Ensure form inputs are interactive
+document.addEventListener('DOMContentLoaded', () => {
+    const inputs = document.querySelectorAll('#applicationForm input, #applicationForm textarea');
+    inputs.forEach(input => {
+        input.removeAttribute('disabled');
+        input.removeAttribute('readonly');
+        input.style.pointerEvents = 'auto';
+        input.style.cursor = 'text';
+    });
+});
+
 // Form Submission
 const applicationForm = document.getElementById('applicationForm');
 if (applicationForm) {
