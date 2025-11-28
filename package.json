@@ -5,18 +5,19 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "build": "echo 'No build step required for static site'"
   },
   "keywords": ["lagos", "residency", "founder", "startup"],
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.18.2",
-    "nodemailer": "^6.9.7",
-    "cors": "^2.8.5",
-    "dotenv": "^16.3.1"
+    "nodemailer": "^6.9.7"
   },
   "devDependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
     "nodemon": "^3.0.1"
   }
 }

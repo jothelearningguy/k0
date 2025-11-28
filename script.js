@@ -69,10 +69,8 @@ if (applicationForm) {
         }
         
         try {
-            // Determine API endpoint (use relative path for same domain, or full URL for different domain)
-            const apiUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-                ? 'http://localhost:3000/api/waitlist'
-                : '/api/waitlist';
+            // Use relative path for API endpoint (works for both localhost and Vercel)
+            const apiUrl = '/api/waitlist';
             
             // Send data to backend
             const response = await fetch(apiUrl, {
@@ -111,6 +109,16 @@ if (applicationForm) {
         } catch (error) {
             console.error('Error submitting form:', error);
             
+            // Determine error type
+            let errorText = 'There was an error submitting your form. ';
+            if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+                errorText += 'The server is not running. Please start the server with "npm start" or email us directly at k0residencylagos@gmail.com';
+            } else if (error.message) {
+                errorText += error.message;
+            } else {
+                errorText += 'Please try again or email us at k0residencylagos@gmail.com';
+            }
+            
             // Show error message
             const errorMessage = document.createElement('div');
             errorMessage.className = 'error-message';
@@ -122,8 +130,9 @@ if (applicationForm) {
                 margin-top: 24px;
                 text-align: center;
                 font-weight: 600;
+                line-height: 1.6;
             `;
-            errorMessage.textContent = '✗ There was an error. Please try again or email us at k0residencylagos@gmail.com';
+            errorMessage.innerHTML = `✗ ${errorText}<br><br><a href="mailto:k0residencylagos@gmail.com?subject=Waitlist Signup&body=Name: ${encodeURIComponent(data.name)}%0AEmail: ${encodeURIComponent(data.email)}%0AUniversity: ${encodeURIComponent(data.university || 'N/A')}%0A%0AMessage:%0A${encodeURIComponent(data.message || 'N/A')}" style="color: white; text-decoration: underline;">Click here to email us directly</a>`;
             
             applicationForm.appendChild(errorMessage);
             errorMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });

@@ -32,17 +32,24 @@ lagosresidency/
 
 ## Getting Started
 
-### Static Website (No Backend)
+### Local Development (Static Website)
 
 1. Open `index.html` in a web browser
 2. No build process or dependencies required
 
-### With Email Backend
+### Local Development (With Email Backend)
 
 1. Install Node.js dependencies: `npm install`
 2. Set up email configuration (see [SETUP.md](SETUP.md))
 3. Start the server: `npm start`
 4. Open `http://localhost:3000` in your browser
+
+### Deploy to Vercel (Recommended)
+
+1. Push code to GitHub
+2. Import project to Vercel
+3. Add environment variables (EMAIL_USER, EMAIL_PASS)
+4. Deploy! See [VERCEL_DEPLOY.md](VERCEL_DEPLOY.md) for detailed instructions
 
 ## Sections Included
 

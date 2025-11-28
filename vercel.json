@@ -1,0 +1,8 @@
+{
+  "functions": {
+    "api/waitlist.js": {
+      "maxDuration": 10
+    }
+  }
+}
+
