@@ -1,0 +1,23 @@
+{
+  "name": "k0-lagos-residency",
+  "version": "1.0.0",
+  "description": "k0 Lagos Founder Residency Program Website",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": ["lagos", "residency", "founder", "startup"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "nodemailer": "^6.9.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
+

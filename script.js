@@ -33,42 +33,94 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // Form Submission
 const applicationForm = document.getElementById('applicationForm');
 if (applicationForm) {
-    applicationForm.addEventListener('submit', (e) => {
+    applicationForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
         // Get form data
         const formData = new FormData(applicationForm);
-        const data = Object.fromEntries(formData);
+        const data = {
+            name: formData.get('name'),
+            email: formData.get('email'),
+            university: formData.get('university') || '',
+            message: formData.get('message') || ''
+        };
         
-        // Here you would typically send this to a backend
-        // For now, we'll just show a success message
-        console.log('Application submitted:', data);
+        // Get submit button and disable it
+        const submitButton = applicationForm.querySelector('button[type="submit"]');
+        const originalButtonText = submitButton.textContent;
+        submitButton.disabled = true;
+        submitButton.textContent = 'Submitting...';
         
-        // Show success message
-        const successMessage = document.createElement('div');
-        successMessage.className = 'success-message';
-        successMessage.style.cssText = `
-            background: #10B981;
-            color: white;
-            padding: 16px 24px;
-            border-radius: 8px;
-            margin-top: 24px;
-            text-align: center;
-            font-weight: 600;
-        `;
-        successMessage.textContent = '✓ Thank you! We\'ll notify you when applications open.';
-        
-        // Remove any existing success message
-        const existingMessage = applicationForm.querySelector('.success-message');
+        // Remove any existing messages
+        const existingMessage = applicationForm.querySelector('.success-message, .error-message');
         if (existingMessage) {
             existingMessage.remove();
         }
         
-        applicationForm.appendChild(successMessage);
-        applicationForm.reset();
-        
-        // Scroll to success message
-        successMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        try {
+            // Determine API endpoint (use relative path for same domain, or full URL for different domain)
+            const apiUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+                ? 'http://localhost:3000/api/waitlist'
+                : '/api/waitlist';
+            
+            // Send data to backend
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                // Show success message
+                const successMessage = document.createElement('div');
+                successMessage.className = 'success-message';
+                successMessage.style.cssText = `
+                    background: #10B981;
+                    color: white;
+                    padding: 16px 24px;
+                    border-radius: 8px;
+                    margin-top: 24px;
+                    text-align: center;
+                    font-weight: 600;
+                `;
+                successMessage.textContent = '✓ ' + result.message;
+                
+                applicationForm.appendChild(successMessage);
+                applicationForm.reset();
+                
+                // Scroll to success message
+                successMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } else {
+                throw new Error(result.message || 'Something went wrong');
+            }
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            
+            // Show error message
+            const errorMessage = document.createElement('div');
+            errorMessage.className = 'error-message';
+            errorMessage.style.cssText = `
+                background: #DC2626;
+                color: white;
+                padding: 16px 24px;
+                border-radius: 8px;
+                margin-top: 24px;
+                text-align: center;
+                font-weight: 600;
+            `;
+            errorMessage.textContent = '✗ There was an error. Please try again or email us at k0residencylagos@gmail.com';
+            
+            applicationForm.appendChild(errorMessage);
+            errorMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        } finally {
+            // Re-enable submit button
+            submitButton.disabled = false;
+            submitButton.textContent = originalButtonText;
+        }
     });
 }
 

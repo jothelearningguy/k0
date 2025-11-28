@@ -18,16 +18,31 @@ This website showcases the k0 Lagos Founder Residency, a 3-month program designe
 
 ```
 lagosresidency/
-├── index.html      # Main HTML file
-├── styles.css      # All styling and responsive design
-├── script.js       # Interactive functionality
-└── README.md       # This file
+├── index.html          # Main HTML file
+├── benefits.html       # Benefits page
+├── who-should-apply.html # Who Should Apply page
+├── styles.css          # All styling and responsive design
+├── script.js           # Interactive functionality
+├── server.js           # Node.js backend for email
+├── package.json        # Node.js dependencies
+├── .env.example        # Environment variables template
+├── SETUP.md            # Email setup instructions
+└── README.md           # This file
 ```
 
 ## Getting Started
 
+### Static Website (No Backend)
+
 1. Open `index.html` in a web browser
-2. No build process or dependencies required - it's a static website
+2. No build process or dependencies required
+
+### With Email Backend
+
+1. Install Node.js dependencies: `npm install`
+2. Set up email configuration (see [SETUP.md](SETUP.md))
+3. Start the server: `npm start`
+4. Open `http://localhost:3000` in your browser
 
 ## Sections Included
 
@@ -60,10 +75,16 @@ Edit the CSS variables in `styles.css`:
 All content is in `index.html` - edit directly to update text, add sections, or modify structure.
 
 ### Form Submission
-Currently, the form logs to console. To connect to a backend:
-1. Update the form submission handler in `script.js`
-2. Add your API endpoint
-3. Handle success/error responses
+The waitlist form sends emails to **k0residencylagos@gmail.com** when submitted. 
+
+**Setup Required:**
+1. See [SETUP.md](SETUP.md) for detailed email configuration instructions
+2. Configure Gmail App Password in `.env` file
+3. Start the Node.js server: `npm start`
+
+The form sends:
+- Notification email to k0residencylagos@gmail.com with applicant details
+- Confirmation email to the applicant
 
 ## Browser Support
 
@@ -73,9 +94,18 @@ Currently, the form logs to console. To connect to a backend:
 - Edge (latest)
 - Mobile browsers (iOS Safari, Chrome Mobile)
 
+## Email Setup
+
+The waitlist form is configured to send emails. See [SETUP.md](SETUP.md) for complete setup instructions.
+
+**Quick Setup:**
+1. Install dependencies: `npm install`
+2. Copy `.env.example` to `.env`
+3. Add your Gmail credentials (with App Password)
+4. Run: `npm start`
+
 ## Future Enhancements
 
-- Backend integration for form submissions
 - Application portal
 - Blog/news section
 - Partner showcase
